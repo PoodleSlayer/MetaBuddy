@@ -6,20 +6,22 @@ namespace MetaBuddy
 {
 	class Program
 	{
-		// replace this with your source directory
-		private static readonly string sourceDirectory = @"C:\Users\Username\videos\";
-
 		static void Main(string[] args)
 		{
+			Console.WriteLine("Enter a directory to look for matching video files:");
+			string sourceDirectory = Console.ReadLine();
 			Console.WriteLine("Beginning to update metadata...");
-			EditMetaData();
-			Console.WriteLine("All done!");
+			int videoCount = EditMetaData(sourceDirectory);
+			Console.WriteLine($"All done! Updated {videoCount} files");
+			Console.ReadKey();
 		}
 
-		private static void EditMetaData()
+		private static int EditMetaData(string sourceDirectory)
 		{
 			DirectoryInfo dir = new DirectoryInfo(sourceDirectory);
 			string pattern = @"(- [0-9]+x[0-9]+ -)";
+			int videoCount = 0;
+
 			foreach (var file in dir.GetFiles())
 			{
 				string fileName = Path.GetFileNameWithoutExtension(file.FullName);
@@ -33,8 +35,10 @@ namespace MetaBuddy
 				var tagFile = TagLib.File.Create(file.FullName);
 				tagFile.Tag.Title = parts[parts.Length - 1];
 				tagFile.Save();
-				;
+				videoCount++;
 			}
+
+			return videoCount;
 		}
 	}
 }
