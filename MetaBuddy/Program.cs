@@ -7,7 +7,6 @@ namespace MetaBuddy
 	class Program
 	{
 		// replace this with your source directory
-		//private static readonly string sourceDirectory = @"C:\Users\Chris\Desktop\test\";
 		private static readonly string sourceDirectory = @"C:\Users\Username\videos\";
 
 		static void Main(string[] args)
